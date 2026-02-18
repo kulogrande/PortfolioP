@@ -1172,7 +1172,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // CONTACT FORM
+  // CONTACT FORM — Formspree
   const form     = document.getElementById('contact-form');
   const feedback = document.getElementById('form-feedback');
   const textarea = document.getElementById('message-input');
@@ -1183,15 +1183,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('email-input').value.trim();
       const msg = textarea ? textarea.value.trim() : '';
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFeedback('Please enter a valid email'); return; }
       if (!msg) { showFeedback('Please enter a message'); return; }
-      showFeedback('Message sent!', true);
-      form.reset();
-      if (textarea) textarea.style.height = 'auto';
+      try {
+        const res = await fetch('https://formspree.io/f/xlgwlpdz', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ email, message: msg })
+        });
+        if (res.ok) {
+          showFeedback('Message sent!', true);
+          form.reset();
+          if (textarea) textarea.style.height = 'auto';
+        } else {
+          showFeedback('Something went wrong. Try again.');
+        }
+      } catch(err) {
+        showFeedback('Something went wrong. Try again.');
+      }
     });
   }
   function showFeedback(msg, ok) {
