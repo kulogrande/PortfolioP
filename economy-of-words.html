@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Economy of Words — Pedro Gomes</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scrollbar-width: none; }
+    html::-webkit-scrollbar { display: none; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #111;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      width: 100%;
+      height: 37vh;
+      background: #e0e0e0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #d8d8d8 0%, #c8c8c8 50%, #d4d4d4 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-label {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: #aaa;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO SUB ── */
+    .hero-sub {
+      width: 100%;
+      height: 80px;
+      background: #ebebeb;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+      justify-content: space-between;
+    }
+
+    .hero-sub-label {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: #aaa;
+      text-transform: uppercase;
+    }
+
+    .hero-sub-meta {
+      display: flex;
+      gap: 48px;
+    }
+
+    .meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .meta-label {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #bbb;
+    }
+    .meta-value {
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: #111;
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      padding: 80px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .content-left {}
+
+    .project-index {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #bbb;
+      margin-bottom: 20px;
+    }
+
+    .project-title {
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: clamp(36px, 4vw, 64px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #111;
+      line-height: 1;
+      margin-bottom: 32px;
+    }
+
+    .project-description {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #666;
+      max-width: 480px;
+    }
+
+    /* ── ACCORDION ── */
+    .content-right { padding-top: 16px; }
+
+    .role-label {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #bbb;
+      margin-bottom: 20px;
+    }
+
+    .accordion { display: flex; flex-direction: column; }
+
+    .accordion-item {
+      border-bottom: 1px solid #ebebeb;
+    }
+
+    .accordion-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #111;
+      transition: opacity 0.2s ease;
+    }
+    .accordion-btn:hover { opacity: 0.5; }
+
+    .accordion-icon {
+      font-size: 16px;
+      color: #111;
+      transition: transform 0.3s ease;
+      line-height: 1;
+    }
+    .accordion-item.open .accordion-icon { transform: rotate(45deg); }
+
+    .accordion-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.23,1,0.32,1), padding 0.35s ease;
+    }
+    .accordion-item.open .accordion-panel {
+      max-height: 400px;
+      padding-bottom: 20px;
+    }
+
+    .accordion-panel p {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #888;
+    }
+
+    /* ── GALLERY GRID ── */
+    .gallery {
+      padding: 0 0 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .gallery-row-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+
+    .gallery-cell {
+      background: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-cell img,
+    .gallery-cell video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 1.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .gallery-cell:hover img,
+    .gallery-cell:hover video { transform: scale(1.03); }
+
+    .gallery-cell-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cell-label {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: #bbb;
+      text-transform: uppercase;
+    }
+
+    .cell-sm { height: 400px; background: #d8d8d8; }
+    .cell-sm:nth-child(2) { background: #cecece; }
+    .cell-lg { height: 560px; background: #e4e4e4; }
+
+    /* ── PROJECT NAV FOOTER ── */
+    .project-footer {
+      border-top: 1px solid #ebebeb;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+    }
+
+    .proj-footer-back {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #aaa;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .proj-footer-back:hover { color: #111; }
+
+    .proj-footer-center {
+      text-align: center;
+    }
+
+    .proj-footer-index {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: #ccc;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .proj-footer-name {
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #111;
+    }
+
+    .proj-footer-next {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-end;
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #aaa;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .proj-footer-next:hover { color: #111; }
+
+    /* Load animation */
+    .hero, .hero-sub, .content, .gallery {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: page-in 0.7s cubic-bezier(0.23,1,0.32,1) forwards;
+    }
+    .hero      { animation-delay: 0.05s; }
+    .hero-sub  { animation-delay: 0.15s; }
+    .content   { animation-delay: 0.25s; }
+    .gallery   { animation-delay: 0.35s; }
+
+    @keyframes page-in {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .top-nav { padding: 0 24px; }
+      .content { grid-template-columns: 1fr; gap: 48px; padding: 60px 24px; }
+      .hero-sub { padding: 0 24px; flex-direction: column; align-items: flex-start; gap: 16px; height: auto; padding: 20px 24px; }
+      .hero-sub-meta { gap: 24px; }
+      .project-footer { padding: 40px 24px; }
+      .cell-sm { height: 280px; }
+      .cell-lg { height: 380px; }
+    }
+
+    @media (max-width: 600px) {
+      .hero { height: 50vh; }
+      .gallery-row-two { grid-template-columns: 1fr; }
+      .cell-sm { height: 260px; }
+      .project-footer { grid-template-columns: 1fr; gap: 24px; text-align: center; }
+      .proj-footer-next { justify-content: center; }
+      .proj-footer-back { justify-content: center; }
+      .top-nav-right { display: none; }
+    }
+
+
+    /* ── RELATED PROJECTS ── */
+    .related {
+      padding: 80px 48px;
+    }
+    body.dark .related { }
+
+    .related-label {
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 32px;
+    }
+    body.dark .related-label { color: #666; }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+
+    .related-card {
+      text-decoration: none;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .related-card-image {
+      width: 100%;
+      padding-bottom: 56.25%;
+      position: relative;
+      background: #e0e0e0;
+      overflow: hidden;
+      transition: transform 1.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .related-card-image .cell-label {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .related-card-image img,
+    .related-card-image video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    body.dark .related-card-image { background: #1e1e1e; }
+    .related-card:nth-child(2) .related-card-image { background: #d4d4d4; }
+    body.dark .related-card:nth-child(2) .related-card-image { background: #181818; }
+
+    .related-card:hover .related-card-image { transform: scale(1.03); }
+
+    .related-card-footer {
+      padding: 14px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .related-card-title {
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #111;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+    .related-card-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: #111;
+      transition: width 0.3s cubic-bezier(0.23,1,0.32,1);
+    }
+    body.dark .related-card-title { color: #fff; }
+    body.dark .related-card-title::after { background: #fff; }
+    .related-card:hover .related-card-title::after { width: 100%; }
+
+    @media (max-width: 600px) {
+      .related { padding: 60px 24px; }
+      .related-grid { grid-template-columns: 1fr; }
+      .related-card-image { height: 220px; }
+    }
+
+    /* ── PAGE FOOTER ── */
+    .page-footer {
+      border-top: 1px solid #ebebeb;
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    body.dark .page-footer { border-top-color: #222; }
+
+    .footer-copy {
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+    }
+    body.dark .footer-copy { color: #666; }
+
+    .footer-all {
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.15s ease;
+    }
+    .footer-all::before {
+      content: '→ All Projects';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #111;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      pointer-events: none;
+    }
+    @keyframes nudge-right {
+      0%, 100% { transform: translateX(0); }
+      50%       { transform: translateX(4px); }
+    }
+    .footer-all:hover { color: transparent; }
+    .footer-arrow { display: inline-block; animation: nudge-right 2s ease-in-out infinite; }
+    .footer-all:hover .footer-arrow { animation: none; }
+    .footer-all:hover::before { opacity: 1; }
+    body.dark .footer-all { color: #666; }
+    body.dark .footer-all::before { color: #fff; }
+    /* ── DARK MODE ── */
+    body.dark { background: #111; color: #fff; }
+    body.dark .hero-placeholder { background: linear-gradient(135deg, #1e1e1e 0%, #181818 50%, #1c1c1c 100%); }
+    body.dark .hero-label { color: #444; }
+    body.dark .hero-sub { background: #1a1a1a; }
+    body.dark .hero-sub-label { color: #555; }
+    body.dark .meta-value { color: #fff; }
+    body.dark .project-title { color: #fff; }
+    body.dark .project-description { color: #888; border-color: #222; }
+    body.dark .accordion-item { border-bottom-color: #222; }
+    body.dark .accordion-btn { color: #fff; }
+    body.dark .accordion-icon { color: #fff; }
+    body.dark .accordion-panel p { color: #666; }
+    body.dark .gallery-cell { background: #1a1a1a; }
+    body.dark .cell-sm { background: #1e1e1e; }
+    body.dark .cell-sm:nth-child(2) { background: #181818; }
+    body.dark .cell-lg { background: #1c1c1c; }
+    body.dark .cell-label { color: #333; }
+    body.dark .project-footer { border-top-color: #222; }
+    body.dark .proj-footer-back { color: #555; }
+    body.dark .proj-footer-back:hover { color: #fff; }
+    body.dark .proj-footer-next { color: #555; }
+    body.dark .proj-footer-next:hover { color: #fff; }
+    body.dark .proj-footer-index { color: #333; }
+    body.dark .proj-footer-name { color: #555 !important; }
+    body.dark .project-index { color: #444; }
+    body.dark .role-label { color: #444; }
+  </style>
+</head>
+<body>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-placeholder">
+      <span class="hero-label">Hero Image — Economy of Words</span>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <!-- ── CONTENT ── -->
+  <div class="content">
+    <div class="content-left">
+      <h1 class="project-title">Economy<br>of Words</h1>
+      <p class="project-description">
+        A communication project built on the principle that precision outperforms volume. Economy of Words distills complex ideas into their most essential form — where every word earns its place and silence becomes as deliberate as language.
+      </p>
+    </div>
+
+    <div class="content-right">
+      <div class="accordion">
+
+        <div class="accordion-item">
+          <button class="accordion-btn">Challenge <span class="accordion-icon">+</span></button>
+          <div class="accordion-panel">
+            <p>Developing a visual and verbal identity system that could represent the philosophy of restraint — communicating more through less. The challenge was creating a brand that practised exactly what it preached: minimal, deliberate, and precise.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">Approach <span class="accordion-icon">+</span></button>
+          <div class="accordion-panel">
+            <p>Built the identity around negative space and typographic discipline. Every design decision was tested against the question: does this add meaning or noise? Motion design reinforced the concept — slow, considered transitions that reward attention.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">My Role <span class="accordion-icon">+</span></button>
+          <div class="accordion-panel">
+            <p>Brand identity, motion design, typographic system, AI-assisted content generation, and art direction across all deliverables. End-to-end creative direction from concept through final execution.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">Deliverables <span class="accordion-icon">+</span></button>
+          <div class="accordion-panel">
+            <p>Brand identity system, motion guidelines, typographic specimen, social content templates, presentation deck, and editorial photography direction.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GALLERY ── -->
+  <div class="gallery">
+    <!-- Two side by side -->
+    <div class="gallery-row-two">
+      <div class="gallery-cell cell-sm">
+        <div class="gallery-cell-placeholder">
+          <span class="cell-label">Image 01</span>
+        </div>
+      </div>
+      <div class="gallery-cell cell-sm">
+        <div class="gallery-cell-placeholder">
+          <span class="cell-label">Image 02</span>
+        </div>
+      </div>
+    </div>
+    <!-- One full width -->
+    <div class="gallery-cell cell-lg">
+      <div class="gallery-cell-placeholder">
+        <span class="cell-label">Image 03 — Full Width</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── RELATED PROJECTS ── -->
+  <section class="related">
+    <div class="related-label">More Work</div>
+    <div class="related-grid">
+      <a href="/standard-bank" class="related-card">
+        <div class="related-card-image">
+          <span class="cell-label">Standard Bank</span>
+        </div>
+        <div class="related-card-footer">
+          <span class="related-card-title">Standard Bank</span>
+        </div>
+      </a>
+      <a href="/synastra" class="related-card">
+        <div class="related-card-image">
+          <span class="cell-label">Synastra</span>
+        </div>
+        <div class="related-card-footer">
+          <span class="related-card-title">Synastra</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── PAGE FOOTER ── -->
+  <footer class="page-footer">
+    <span class="footer-copy">© Pedro Gomes 2025</span>
+    <a href="/" class="footer-all"><span class="footer-arrow">→</span> All Projects</a>
+  </footer>
+
+<script>
+
+  // ── DARK MODE SYNC ──
+  const isDark = localStorage.getItem('pedraw-dark') === 'true';
+  if (isDark) document.body.classList.add('dark');
+
+  document.querySelectorAll('.accordion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
