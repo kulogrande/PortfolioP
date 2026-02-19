@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pedro Gomes — Portfolio</title>
+  <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/pedraw26/PortfolioP@main/loading%20image.png">
   <script>
     (() => {
       const saved = localStorage.getItem('pedraw-override');
@@ -17,6 +18,16 @@
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      --page-bg: #fff;
+      --page-fg: #111;
+    }
+
+    html.dark {
+      --page-bg: #111;
+      --page-fg: #fff;
+    }
+
     html {
       scroll-behavior: smooth;
       scrollbar-width: none;
@@ -25,15 +36,13 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: #fff;
-      color: #111;
+      background: var(--page-bg);
+      color: var(--page-fg);
       width: 100%;
       overflow-x: hidden;
       opacity: 1;
       transition: background 0.35s ease, color 0.35s ease, opacity 0.2s ease;
     }
-
-    html.dark body { background: #111; color: #fff; }
     body.is-leaving { opacity: 0; }
 
     .main-nav,
@@ -55,15 +64,14 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: #fff;
+      background: var(--page-bg);
       height: 52px;
       padding: 0 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: background 0.4s ease;
+      transition: background-color 0.35s ease;
     }
-    html.dark .main-nav { background: #111; }
 
     .nav-logo {
       font-size: 10.5px;
@@ -595,19 +603,12 @@
       text-transform: uppercase;
       color: #888;
       white-space: nowrap;
-      padding: 0 28px;
+      padding: 0 38px;
       transition: color 0.2s;
     }
     .marquee-item:hover { color: #111; }
     html.dark .marquee-item { color: #555; }
     html.dark .marquee-item:hover { color: #fff; }
-    .marquee-dot {
-      width: 3px; height: 3px;
-      border-radius: 50%;
-      background: #ddd;
-      flex-shrink: 0;
-    }
-    html.dark .marquee-dot { background: #333; }
     @keyframes marquee-scroll {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
@@ -958,7 +959,7 @@
     <h1 class="headline name-line">
       <span class="hl">I'm</span>
       <span class="name-avatar">
-        <img src="https://github.com/pedraw26/PortfolioP/blob/main/Pedro%20Hero%20text.png?raw=true" alt="Pedro Gomes portrait" loading="eager" decoding="async">
+        <img id="heroAvatar" src="https://cdn.jsdelivr.net/gh/pedraw26/PortfolioP@main/loading%20image.png" alt="" loading="eager" decoding="async" fetchpriority="high">
       </span>
       <span class="hl">Pedro.</span>
     </h1>
@@ -970,54 +971,54 @@
   <div class="marquee-strip">
     <div class="marquee-track">
       <div class="marquee-group">
-        <span class="marquee-item">Brand Identity</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Motion Design</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">AI-Generated Content</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Visual Systems</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Social Content at Scale</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Ecommerce Design</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Brand Photography</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">After Effects</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Figma</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">MidJourney</span>
-        <span class="marquee-dot"></span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
       </div>
       <div class="marquee-group">
-        <span class="marquee-item">Brand Identity</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Motion Design</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">AI-Generated Content</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Visual Systems</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Social Content at Scale</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Ecommerce Design</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Brand Photography</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">After Effects</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">Figma</span>
-        <span class="marquee-dot"></span>
-        <span class="marquee-item">MidJourney</span>
-        <span class="marquee-dot"></span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
+        <span class="marquee-item">SELECTED WORKS ↓</span>
       </div>
     </div>
   </div>
 
   <!-- ══ GALLERY ══ -->
   <div class="gallery-container" id="gallery">
+    <div class="row">
+      <div class="project">
+        <div class="project-image">
+          <img src="https://github.com/pedraw26/PortfolioP/blob/Images/Moope.jpg?raw=true" alt="Moope">
+          <div class="project-info">
+            <h3 class="project-title">MOOPE</h3>
+            <p class="project-meta">Featured Work</p>
+          </div>
+        </div>
+      </div>
+      <div class="project">
+        <div class="project-image">
+          <img src="https://github.com/pedraw26/PortfolioP/blob/Images/Untitled-2%20copy.jpg?raw=true" alt="Untitled 2 copy">
+          <div class="project-info">
+            <h3 class="project-title">UNTITLED 02</h3>
+            <p class="project-meta">Featured Work</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="project">
         <div class="project-image" style="background:#e8e8e8">
@@ -1216,6 +1217,21 @@ document.addEventListener('DOMContentLoaded', function() {
         wordEl.style.transform = 'translateY(0)';
       }, 260);
     }, 2500);
+  }
+
+  // HERO AVATAR FALLBACKS
+  const heroAvatar = document.getElementById('heroAvatar');
+  if (heroAvatar) {
+    const avatarSources = [
+      'https://cdn.jsdelivr.net/gh/pedraw26/PortfolioP@main/loading%20image.png',
+      'https://raw.githubusercontent.com/pedraw26/PortfolioP/main/loading%20image.png',
+      'https://github.com/pedraw26/PortfolioP/blob/main/loading%20image.png?raw=true'
+    ];
+    let avatarIndex = 0;
+    heroAvatar.addEventListener('error', () => {
+      avatarIndex += 1;
+      if (avatarIndex < avatarSources.length) heroAvatar.src = avatarSources[avatarIndex];
+    });
   }
 
   // HAMBURGER
